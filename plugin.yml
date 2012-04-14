@@ -1,0 +1,11 @@
+name: AutoItemBarReload
+main: com.epicsagaonline.bukkit.AutoItemBarReload.AutoItemBarReload
+version: 1.5
+website: code.google.com/p/team-eso
+author: jblaske@gmail.com
+description: >
+             Automatically reloads an item on the item bar with a matching stack in the player's inventory.
+permissions:
+  autoitembarreload.disallow:
+    description: Denies access to AutoItemBarReload.
+    default: false
