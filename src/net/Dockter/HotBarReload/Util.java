@@ -3,11 +3,11 @@ package net.Dockter.HotBarReload;
 import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.PlayerInventory;
 
 public class Util
 {
-  public static void ReloadItemBar(Player player, Material itemType)
+  @SuppressWarnings("deprecation")
+public static void ReloadItemBar(Player player, Material itemType)
   {
     int destSlot = -1;
     int srcSlot = -1;

@@ -1,6 +1,6 @@
 package net.Dockter.HotBarReload.integration;
 
-import com.epicsagaonline.bukkit.AutoItemBarReload.Log;
+import net.Dockter.HotBarReload.Log;
 // import com.herocraftonline.dthielke.lists.Lists;
 // import com.herocraftonline.dthielke.lists.PrivilegedList;
 import com.nijiko.permissions.PermissionHandler;
@@ -31,58 +31,49 @@ public class PermissionsManager
 //  private static Lists Lists_Perms = null;
   private static Plugin plugin = null;
 
-  public static void Init(Plugin inPlugin)
-  {
+  public static void Init(Plugin inPlugin) {
     plugin = inPlugin;
-
     boolean permStart = startPermissionsEX();
-    if (permStart)
-    {
+    
+    if (permStart) {
       Log.Write("Using 'PermissionsEX' plugin for permission management.");
     }
-    if (!permStart)
-    {
+    
+    if (!permStart) {
       permStart = startGroupManager();
-      if (permStart)
-      {
+      if (permStart) {
         Log.Write("Using 'GroupManager' plugin for permission management.");
       }
     }
-    if (!permStart)
-    {
+    
+    if (!permStart) {
       permStart = startLists();
-      if (permStart)
-      {
+      if (permStart) {
         Log.Write("Using 'Lists' plugin for permission management.");
       }
     }
-    if (!permStart)
-    {
+    
+    if (!permStart) {
       permStart = startPermissions();
-      if (permStart)
-      {
+      if (permStart) {
         Log.Write("Using 'Permissions' plugin for permission management.");
       }
     }
-    if (!permStart)
-    {
+    
+    if (!permStart) {
       Log.Write("Using Bukkit Permissions for permission management.");
     }
   }
 
-  public static boolean hasPermission(Player player, String permission)
-  {
+  public static boolean hasPermission(Player player, String permission) {
     boolean result = false;
-    try
-    {
-      if (Permissions_Perms != null)
-      {
+    try {
+    	
+      if (Permissions_Perms != null) {
         result = Permissions_Perms.has(player, permission);
-      } else if (PEX_Perms != null)
-      {
+      } else if (PEX_Perms != null) {
         result = PEX_Perms.has(player, permission);
-      } else if (GroupManager_Perms != null)
-      {
+      } else if (GroupManager_Perms != null) {
         result = GroupManager_Perms.getWorldData(player).getPermissionsHandler().has(player, permission); } else {
       //  if (Lists_Perms != null)
       //  {
@@ -110,28 +101,20 @@ public class PermissionsManager
     return result;
   }
 
-  public static ArrayList<String> getGroupNames(Player player)
-  {
-    ArrayList result = new ArrayList();
-    if (PEX_Perms != null)
-    {
-      for (PermissionGroup pg : PEX_Perms.getGroups())
-      {
-        for (PermissionUser pu : pg.getUsers())
-        {
+  public static ArrayList<String> getGroupNames(Player player) {
+    ArrayList<String> result = new ArrayList<String>();
+    if (PEX_Perms != null) {
+      for (PermissionGroup pg : PEX_Perms.getGroups()) {
+        for (PermissionUser pu : pg.getUsers()) {
           if (!pu.getName().equalsIgnoreCase(player.getName()))
             continue;
           result.add(pg.getName());
         }
       }
-    }
-    else if (GroupManager_Perms != null)
-    {
+    } else if (GroupManager_Perms != null) {
       Collection<Group> grps = GroupManager_Perms.getWorldData(player).getGroupList();
-      if (grps != null)
-      {
-        for (Group grp : grps)
-        {
+      if (grps != null) {
+        for (Group grp : grps) {
           result.add(grp.getName());
         }
       }
@@ -145,20 +128,15 @@ public class PermissionsManager
     //      result.add(prv.getName());
      //   }
     //  }
-    } else if (Permissions_Perms != null)
-    {
+    } else if (Permissions_Perms != null) {
       String[] grps = Permissions_Perms.getGroups(player.getWorld().getName(), player.getName());
-      if (grps != null)
-      {
-        for (String grp : grps)
-        {
+      if (grps != null) {
+        for (String grp : grps) {
           result.add(0, grp);
         }
       }
-    }
-    else {
-      if (player.isOp())
-      {
+    } else {
+      if (player.isOp()) {
         result.add("op");
       }
       result.add("default");
@@ -166,13 +144,10 @@ public class PermissionsManager
     return result;
   }
 
-  public static boolean startPermissions()
-  {
+  public static boolean startPermissions() {
     Plugin p = plugin.getServer().getPluginManager().getPlugin("Permissions");
-    if (p != null)
-    {
-      if (!p.isEnabled())
-      {
+    if (p != null) {
+      if (!p.isEnabled()) {
         plugin.getServer().getPluginManager().enablePlugin(p);
       }
       Permissions_Perms = ((Permissions)p).getHandler();
@@ -181,13 +156,10 @@ public class PermissionsManager
     return false;
   }
 
-  public static boolean startPermissionsEX()
-  {
+  public static boolean startPermissionsEX() {
     Plugin p = plugin.getServer().getPluginManager().getPlugin("PermissionsEx");
-    if (p != null)
-    {
-      if (!p.isEnabled())
-      {
+    if (p != null) {
+      if (!p.isEnabled()) {
         plugin.getServer().getPluginManager().enablePlugin(p);
       }
       PEX_Perms = PermissionsEx.getPermissionManager();
@@ -196,13 +168,10 @@ public class PermissionsManager
     return false;
   }
 
-  public static boolean startGroupManager()
-  {
+  public static boolean startGroupManager() {
     Plugin p = plugin.getServer().getPluginManager().getPlugin("GroupManager");
-    if (p != null)
-    {
-      if (!p.isEnabled())
-      {
+    if (p != null) {
+      if (!p.isEnabled()) {
         plugin.getServer().getPluginManager().enablePlugin(p);
       }
       GroupManager gm = (GroupManager)p;
@@ -212,13 +181,10 @@ public class PermissionsManager
     return false;
   }
 
-  private static boolean startLists()
-  {
+  private static boolean startLists() {
     Plugin p = plugin.getServer().getPluginManager().getPlugin("Lists");
-    if (p != null)
-    {
-      if (!p.isEnabled())
-      {
+    if (p != null) {
+      if (!p.isEnabled()) {
         plugin.getServer().getPluginManager().enablePlugin(p);
       }
     //  Lists_Perms = (Lists)p;

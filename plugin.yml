@@ -1,8 +1,7 @@
 name: AutoItemBarReload
-main: com.epicsagaonline.bukkit.AutoItemBarReload.AutoItemBarReload
-version: 1.5
-website: code.google.com/p/team-eso
-author: jblaske@gmail.com
+main: net.Dockter.HotBarReload.AutoItemBarReload
+version: 1.0
+author: Dockter
 description: >
              Automatically reloads an item on the item bar with a matching stack in the player's inventory.
 permissions:
